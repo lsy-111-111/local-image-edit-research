@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Run Metadata",
+  "type": "object",
+  "required": [
+    "run_id",
+    "model_id",
+    "case_id",
+    "source_image",
+    "source_image_sha256",
+    "prompt",
+    "seed_requested",
+    "seed_effective",
+    "output_path",
+    "runtime_seconds",
+    "cost_usd",
+    "raw_response_path",
+    "status",
+    "version_lock"
+  ],
+  "properties": {
+    "run_id": {"type": "string"},
+    "model_id": {"type": "string"},
+    "case_id": {"type": "string"},
+    "source_image": {"type": "string"},
+    "source_image_sha256": {"type": "string"},
+    "mask": {"type": "string"},
+    "mask_sha256": {"type": "string"},
+    "prompt": {"type": "string"},
+    "seed_requested": {},
+    "seed_effective": {},
+    "output_path": {"type": "string"},
+    "runtime_seconds": {"type": "number"},
+    "cost_usd": {"type": "number"},
+    "raw_response_path": {"type": "string"},
+    "status": {"enum": ["success", "failed", "filtered", "timeout", "rate_limited", "invalid_input"]},
+    "version_lock": {"type": "string"},
+    "risk_flags": {"type": "string"}
+  },
+  "additionalProperties": true
+}

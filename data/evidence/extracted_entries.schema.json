@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Extracted Evidence Entry",
+  "type": "object",
+  "required": ["candidate_name", "candidate_label", "record_type", "review_status"],
+  "properties": {
+    "candidate_id": {"type": "string"},
+    "candidate_name": {"type": "string"},
+    "candidate_label": {"enum": ["A0", "A1", "A2", "B", "C", "D", "X"]},
+    "record_type": {"type": "string"},
+    "source_url": {"type": "string"},
+    "evidence_quote": {"type": "string"},
+    "evidence_level": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5", ""]},
+    "last_verified_date": {"type": "string"},
+    "review_status": {"type": "string"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": true
+}

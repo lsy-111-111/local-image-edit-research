@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Benchmark Case",
+  "type": "object",
+  "required": [
+    "case_id",
+    "image_path",
+    "image_sha256",
+    "task_id",
+    "copyright_status",
+    "prompt_en",
+    "prompt_zh",
+    "expected_change",
+    "preserve_requirements"
+  ],
+  "properties": {
+    "case_id": {"type": "string"},
+    "image_path": {"type": "string"},
+    "image_sha256": {"type": "string"},
+    "mask_path": {"type": "string"},
+    "mask_sha256": {"type": "string"},
+    "task_id": {"type": "string"},
+    "image_type": {"type": "string"},
+    "target_size": {"type": "string"},
+    "mask_quality": {"type": "string"},
+    "language": {"type": "string"},
+    "difficulty": {"type": "string"},
+    "copyright_status": {"type": "string"},
+    "prompt_en": {"type": "string"},
+    "prompt_zh": {"type": "string"},
+    "expected_change": {"type": "string"},
+    "preserve_requirements": {"type": "string"},
+    "safety_notes": {"type": "string"}
+  },
+  "additionalProperties": false
+}
