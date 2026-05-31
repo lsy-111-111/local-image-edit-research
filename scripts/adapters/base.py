@@ -25,6 +25,10 @@ class ImageEditResult:
     cost_usd: float
     seed_effective: int | None
     error: str = ""
+    adapter_kind: str = ""
+    provider_request_id: str = ""
+    version_risk: str = ""
+    cost_estimate_status: str = ""
 
 
 class ImageEditAdapter(Protocol):

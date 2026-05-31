@@ -20,6 +20,7 @@ Schema Gate -> Evidence Gate -> Registry Gate -> Architecture Gate -> Benchmark 
 ```
 
 Core smoke requires a `gate_decision: go` pilot gate. Core full requires both a `gate_decision: go` pilot gate and a `gate_decision: go` core smoke gate.
+Mock-only metadata never unlocks real pilot, core smoke, or core full.
 
 ## Local Checks
 
@@ -37,3 +38,5 @@ make check
 ## Current Status
 
 No-Go for research completion. Go for scaffold hardening and evidence pilot only.
+
+Current implementation includes OpenAI Images and Replicate adapter contracts with dry-run support. Live adapter execution remains blocked until `OPENAI_API_KEY` and `REPLICATE_API_TOKEN` are configured and the provider model map receives human review.

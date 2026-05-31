@@ -33,7 +33,7 @@ def main() -> None:
     parser.add_argument("--sample-per-task", type=int, default=30)
     parser.add_argument("--blind", action="store_true")
     parser.add_argument("--output", required=True)
-    parser.add_argument("--mapping-output", default="data/eval/blind_mapping_private.csv")
+    parser.add_argument("--mapping-output", "--mapping", dest="mapping_output", default="data/eval/blind_mapping_private.csv")
     args = parser.parse_args()
 
     by_task: dict[str, list[dict[str, object]]] = defaultdict(list)

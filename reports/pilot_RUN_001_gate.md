@@ -1,5 +1,7 @@
 # Pilot Gate Decision
 
-gate_decision: go
+gate_decision: no_go
 
-Pilot metadata passed the implemented engineering gate. Human factual review is still required.
+## Blocking Reasons
+
+- mock adapter records cannot unlock real pilot/core

@@ -1,6 +1,6 @@
 # Evidence Pilot Summary
 
-Step 2 processed 24 official or first-party source records and produced 13 extracted evidence entries.
+Step 02 processed 26 official or first-party source records and produced 15 extracted evidence entries.
 
 ## Gate Results
 
@@ -8,6 +8,7 @@ Step 2 processed 24 official or first-party source records and produced 13 extra
 - A0/A1/A2 entries include `source_url`, `evidence_quote`, `evidence_level`, and `last_verified_date`.
 - No E4/E5 record is used for a strong claim.
 - Product/API/demo records are marked as `product_feature` or `API_wrapper` and require registry review.
+- Replicate provider docs are recorded only as provider API evidence; they do not establish individual model capability or hosted model availability.
 - All entries are marked `needs_review` because Codex is not the factual judge.
 
 ## Human Review Queue

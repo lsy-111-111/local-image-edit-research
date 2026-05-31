@@ -4,6 +4,10 @@ This summary is generated from run metadata only.
 
 mock_only_no_model_capability_claim: yes
 
+gate_status: no_go
+
+blocking_reason: mock adapter records cannot unlock real pilot/core
+
 | model_id | cases | failures | failure_rate | cost_usd | version_risk_records |
 |---|---:|---:|---:|---:|---:|
 | flux-1-fill-dev | 100 | 0 | 0.000 | 0.0000 | 100 |

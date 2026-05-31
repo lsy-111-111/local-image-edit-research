@@ -18,6 +18,11 @@ def main() -> None:
     if not records:
         decision = "no_go"
         reasons.append("no core smoke metadata records")
+    adapters = {str(row.get("adapter_name") or row.get("adapter") or "").strip() for row in records}
+    adapters.discard("")
+    if records and ("mock" in adapters or not adapters):
+        decision = "no_go"
+        reasons.append("core smoke requires real adapter metadata")
     if records and len({row.get("case_id") for row in records}) != 100:
         decision = "no_go"
         reasons.append("core smoke must cover exactly 100 cases before expansion")

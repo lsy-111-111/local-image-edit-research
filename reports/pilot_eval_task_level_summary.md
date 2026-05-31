@@ -2,7 +2,9 @@
 
 mock_only_no_model_capability_claim: yes
 
-No aggregate leaderboard is generated.
+No aggregate comparison table is generated.
+
+evaluation_status: blocked_for_real_research_until_live_pilot_metadata_exists
 
 | task_id | metric_rows | human_eval_rows | coverage_status |
 |---|---:|---:|---|

@@ -1,1 +1,7 @@
 model_id,review_reason,base_architecture,control_mechanism,training_or_inference,deployment,architecture_public,source_url,evidence_quote
+gpt-image-1,base_architecture:unknown;control_mechanism:unknown;training_or_inference:unknown;deployment:unknown,unknown,unknown,unknown,unknown,unknown,https://developers.openai.com/api/docs/models/gpt-image-1,
+flux-1-kontext-dev,base_architecture:unknown;control_mechanism:unknown;training_or_inference:unknown;deployment:unknown,unknown,unknown,unknown,unknown,unknown,https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev,
+flux-1-fill-dev,base_architecture:unknown;control_mechanism:unknown;training_or_inference:unknown;deployment:unknown,unknown,unknown,unknown,unknown,unknown,https://huggingface.co/black-forest-labs/FLUX.1-Fill-dev,
+stable-diffusion-2-inpainting,base_architecture:unknown;control_mechanism:unknown;training_or_inference:unknown;deployment:unknown,unknown,unknown,unknown,unknown,unknown,https://huggingface.co/stabilityai/stable-diffusion-2-inpainting,
+qwen-image-edit,base_architecture:unknown;control_mechanism:unknown;training_or_inference:unknown;deployment:unknown,unknown,unknown,unknown,unknown,unknown,https://huggingface.co/Qwen/Qwen-Image-Edit,
+seededit,base_architecture:unknown;control_mechanism:unknown;training_or_inference:unknown;deployment:unknown,unknown,unknown,unknown,unknown,unknown,https://seed.bytedance.com/public_papers/seededit-align-image-re-generation-to-image-editing,

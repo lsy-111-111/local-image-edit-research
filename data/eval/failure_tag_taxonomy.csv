@@ -6,3 +6,10 @@ mask_failure,Mask is missing, too rough, misplaced, or inconsistent with expecte
 metadata_failure,Run metadata is missing, inconsistent, or not auditable,T01-T16,high,,Blocks leaderboard and core promotion
 safety_issue,Output or requested edit creates a safety concern,T01-T16,high,,Requires human escalation
 mock_only_artifact,Output is produced by mock adapter and cannot be visually scored,T01-T16,low,,Expected for engineering-only pilot
+safety_filter,Provider safety system blocked or filtered the edit,T01-T16,high,,Separate from model quality
+version_drift,Provider/model version changed or cannot be pinned,T01-T16,medium,,Blocks strong comparison claims
+cost_or_timeout,Call exceeded configured cost or runtime budget,T01-T16,medium,,Track separately from output quality
+locality_failure,Edit changed unrequested image regions,T01-T16,high,,Core local editing criterion
+preservation_failure,Required preserved content was modified or lost,T01-T16,high,,Core preservation criterion
+instruction_failure,Output ignored or contradicted the edit instruction,T01-T16,high,,Core instruction-following criterion
+visual_artifact,Output has visible artifacts unrelated to requested edit,T01-T16,medium,,Human visual quality review

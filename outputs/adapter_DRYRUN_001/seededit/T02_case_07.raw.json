@@ -1,0 +1,7 @@
+{
+  "adapter": "replicate",
+  "provider_model_ref": "bytedance/seededit-3.0",
+  "dry_run": true,
+  "status": "succeeded",
+  "note": "no Replicate API call performed"
+}

@@ -9,7 +9,11 @@ from scripts.common import ensure_parent, is_missing, read_csv_rows
 
 
 AUDIT_FIELDS = ["line_no", "claim", "status", "evidence_ref", "notes"]
-STRONG_CLAIM_RE = re.compile(r"\b(best|better|supports|outperforms|recommend|conclusion)\b", re.IGNORECASE)
+STRONG_CLAIM_RE = re.compile(
+    r"\b(best|better|support|supports|outperform|outperforms|recommend|recommends|conclusion|rank|ranking|leaderboard)\b"
+    r"|最好|优于|推荐|排名|结论",
+    re.IGNORECASE,
+)
 WEAK_EVIDENCE_LEVELS = {"E4", "E5"}
 
 
@@ -119,7 +123,10 @@ def audit(report_path: Path, claim_manifest: Path | None = None) -> tuple[list[d
                 notes = f"{notes}; claim_not_in_manifest"
             elif manifest_row.get("allowed_in_report", "").strip().lower() != "yes":
                 status = "missing"
+                invalid_reason = manifest_row.get("invalid_reason", "").strip()
                 notes = f"{notes}; allowed_in_report_not_yes"
+                if invalid_reason:
+                    notes = f"{notes}; invalid_reason={invalid_reason}"
             else:
                 evidence_ref = manifest_trace(manifest_row)
                 if not evidence_ref:

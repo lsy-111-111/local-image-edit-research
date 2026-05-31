@@ -1,7 +1,15 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) != sys.path[0]:
+    while str(ROOT) in sys.path:
+        sys.path.remove(str(ROOT))
+    sys.path.insert(0, str(ROOT))
 
 from scripts.adapters.base import ImageEditRequest
 from scripts.adapters.registry import available_adapters, create_adapter
@@ -75,7 +83,7 @@ def main() -> None:
     parser.add_argument("--models", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--metadata", required=True)
-    parser.add_argument("--adapter", choices=available_adapters(), default="mock")
+    parser.add_argument("--adapter", choices=sorted(available_adapters() + ["auto"]), default="mock")
     parser.add_argument("--pilot-gate")
     parser.add_argument("--core-smoke-gate")
     parser.add_argument("--dry-run", action="store_true")
@@ -95,10 +103,17 @@ def main() -> None:
     done = {(str(row.get("model_id", "")), str(row.get("case_id", ""))) for row in existing}
     new_records: list[dict[str, object]] = []
     total_cost = sum(float(row.get("cost_usd", 0.0) or 0.0) for row in existing)
-    adapter = create_adapter(args.adapter)
+    adapters = {}
 
     for model in models:
         model_id = safe_id(model.get("model_id", ""), "model")
+        adapter_name = model.get("adapter", "mock") if args.adapter == "auto" else args.adapter
+        if adapter_name not in adapters:
+            adapters[adapter_name] = create_adapter(adapter_name)
+        adapter = adapters[adapter_name]
+        output_suffix = ".txt" if adapter_name == "mock" else ".png"
+        version_lock = model.get("version_lock") or "D_unversioned"
+        version_risk = model.get("version_risk") or ("version_unlocked" if version_lock == "D_unversioned" else "")
         for case in cases:
             case_id = safe_id(case.get("case_id", ""), "case")
             if args.resume and (model_id, case_id) in done:
@@ -106,7 +121,7 @@ def main() -> None:
             if args.cost_limit_usd is not None and total_cost > args.cost_limit_usd:
                 break
             prompt = case.get("prompt_en") or case.get("prompt_zh") or ""
-            output_path = output_dir / model_id / f"{case_id}.txt"
+            output_path = output_dir / model_id / f"{case_id}{output_suffix}"
             raw_response_path = output_dir / model_id / f"{case_id}.raw.json"
             request = ImageEditRequest(
                 source_image=case.get("image_path", ""),
@@ -121,6 +136,9 @@ def main() -> None:
                     "phase": args.phase,
                     "model_id": model_id,
                     "case_id": case_id,
+                    "provider_model_ref": model.get("provider_model_ref", ""),
+                    "input_schema_ref": model.get("input_schema_ref", ""),
+                    "version_risk": version_risk,
                 },
             )
             result = adapter.generate(request)
@@ -145,9 +163,16 @@ def main() -> None:
                     "cost_usd": result.cost_usd,
                     "raw_response_path": result.raw_response_path,
                     "status": result.status,
-                    "version_lock": model.get("version_lock") or "D_unversioned",
+                    "version_lock": version_lock,
+                    "version_risk": result.version_risk or version_risk,
                     "risk_flags": model.get("risk_flags", ""),
                     "adapter": adapter.adapter_name,
+                    "adapter_name": adapter.adapter_name,
+                    "adapter_kind": result.adapter_kind,
+                    "provider_request_id": result.provider_request_id,
+                    "cost_estimate_status": result.cost_estimate_status,
+                    "provider_model_ref": model.get("provider_model_ref", ""),
+                    "input_schema_ref": model.get("input_schema_ref", ""),
                     "dry_run": args.dry_run,
                     "error": result.error,
                 }

@@ -60,3 +60,26 @@ def test_core_full_requires_go_core_smoke_gate(tmp_path: Path) -> None:
 
     assert result.returncode != 0
     assert "requires core-smoke-gate with gate_decision: go" in result.stderr
+
+
+def test_block_core_rejects_go_gate_with_mock_only_metadata(tmp_path: Path) -> None:
+    pilot_gate = tmp_path / "pilot_gate.md"
+    metadata = tmp_path / "pilot.jsonl"
+    pilot_gate.write_text("gate_decision: go\n", encoding="utf-8")
+    metadata.write_text('{"adapter":"mock","model_id":"m","case_id":"c"}\n', encoding="utf-8")
+
+    result = subprocess.run(
+        [
+            sys.executable,
+            "scripts/block_core_without_pilot.py",
+            "--pilot-gate",
+            str(pilot_gate),
+            "--pilot-metadata",
+            str(metadata),
+        ],
+        capture_output=True,
+        text=True,
+    )
+
+    assert result.returncode != 0
+    assert "pilot metadata is empty or mock-only" in result.stderr

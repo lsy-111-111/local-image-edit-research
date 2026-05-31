@@ -1,0 +1,7 @@
+{
+  "adapter": "replicate",
+  "provider_model_ref": "qwen/qwen-image-edit",
+  "dry_run": true,
+  "status": "succeeded",
+  "note": "no Replicate API call performed"
+}

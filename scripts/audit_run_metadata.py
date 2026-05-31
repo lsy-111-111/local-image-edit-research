@@ -22,6 +22,10 @@ REQUIRED = [
     "raw_response_path",
     "status",
     "version_lock",
+    "adapter",
+    "adapter_name",
+    "adapter_kind",
+    "cost_estimate_status",
 ]
 
 

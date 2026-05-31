@@ -7,6 +7,10 @@ from pathlib import Path
 from scripts.common import ensure_parent, read_jsonl
 
 
+def adapter_name(record: dict[str, object]) -> str:
+    return str(record.get("adapter_name") or record.get("adapter") or "").strip()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--metadata", required=True)
@@ -18,6 +22,13 @@ def main() -> None:
     if not records:
         decision = "no_go"
         reasons.append("no pilot metadata records")
+    adapters = {adapter_name(record) for record in records if adapter_name(record)}
+    if records and adapters <= {"mock"}:
+        decision = "no_go"
+        reasons.append("mock adapter records cannot unlock real pilot/core")
+    if "mock" in adapters and len(adapters) > 1:
+        decision = "no_go"
+        reasons.append("pilot metadata mixes mock and real adapter records")
 
     by_model: dict[str, list[dict[str, object]]] = defaultdict(list)
     for record in records:
@@ -35,7 +46,11 @@ def main() -> None:
             decision = "no_go"
             reasons.append(f"{model_id}: failure_rate_high")
         for row in rows:
-            missing = [field for field in ["source_image", "prompt", "output_path", "raw_response_path"] if not row.get(field)]
+            missing = [
+                field
+                for field in ["source_image", "prompt", "output_path", "raw_response_path", "adapter", "version_lock"]
+                if not row.get(field)
+            ]
             if missing:
                 decision = "no_go"
                 reasons.append(f"{model_id}/{row.get('case_id')}: metadata_missing:{'|'.join(missing)}")

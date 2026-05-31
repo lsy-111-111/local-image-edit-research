@@ -56,4 +56,8 @@ class MockImageEditAdapter:
             runtime_seconds=max(time.perf_counter() - started, 0.0),
             cost_usd=0.0,
             seed_effective=request.seed,
+            adapter_kind="mock",
+            provider_request_id="",
+            version_risk="mock_adapter_no_model_capability_claim",
+            cost_estimate_status="dry_run_or_mock",
         )

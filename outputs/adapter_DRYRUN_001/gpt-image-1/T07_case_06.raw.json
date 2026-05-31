@@ -1,0 +1,7 @@
+{
+  "adapter": "openai_images",
+  "model": "gpt-image-1",
+  "dry_run": true,
+  "status": "success",
+  "note": "no OpenAI API call performed"
+}

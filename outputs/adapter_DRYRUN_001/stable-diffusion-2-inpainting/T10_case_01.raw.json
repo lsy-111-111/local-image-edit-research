@@ -1,0 +1,7 @@
+{
+  "adapter": "replicate",
+  "provider_model_ref": "stability-ai/stable-diffusion-inpainting",
+  "dry_run": true,
+  "status": "succeeded",
+  "note": "no Replicate API call performed"
+}
