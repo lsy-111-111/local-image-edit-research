@@ -7,7 +7,15 @@ from scripts.common import fail_with_errors, is_missing, read_csv_rows, valid_is
 
 
 REQUIRED_COLUMNS = [
+    "provider",
+    "adapter_name",
     "model_id",
+    "public_model_name",
+    "underlying_model",
+    "record_type",
+    "version_risk",
+    "evidence_entry_id",
+    "human_review_status",
     "adapter",
     "provider_model_ref",
     "input_schema_ref",
@@ -27,7 +35,11 @@ def validate(path: Path) -> list[str]:
     errors: list[str] = []
     rows = read_csv_rows(path)
     if not rows:
-        return [f"{path}: provider model map is empty"]
+        if not path.exists():
+            return [f"{path}: provider model map is missing"]
+        header = path.read_text(encoding="utf-8-sig").splitlines()[0].split(",")
+        header = [column.strip().strip('"') for column in header]
+        return [f"{path}: missing column {column}" for column in REQUIRED_COLUMNS if column not in header]
     header = list(rows[0].keys())
     for column in REQUIRED_COLUMNS:
         if column not in header:
@@ -42,6 +54,8 @@ def validate(path: Path) -> list[str]:
         seen.add(model_id)
         if row.get("adapter") not in ALLOWED_ADAPTERS:
             errors.append(f"{path}:{index}: invalid adapter {row.get('adapter')}")
+        if row.get("adapter_name") not in ALLOWED_ADAPTERS:
+            errors.append(f"{path}:{index}: invalid adapter_name {row.get('adapter_name')}")
         if row.get("input_schema_ref") not in ALLOWED_SCHEMAS:
             errors.append(f"{path}:{index}: invalid input_schema_ref {row.get('input_schema_ref')}")
         for field in ["provider_model_ref", "version_lock", "source_url", "evidence_quote", "evidence_level", "last_verified_date"]:
@@ -51,6 +65,8 @@ def validate(path: Path) -> list[str]:
             errors.append(f"{path}:{index}: invalid last_verified_date")
         if row.get("review_status") not in ALLOWED_REVIEW:
             errors.append(f"{path}:{index}: invalid review_status {row.get('review_status')}")
+        if row.get("human_review_status") != "approved":
+            errors.append(f"{path}:{index}: human_review_status must be approved")
     return errors
 
 

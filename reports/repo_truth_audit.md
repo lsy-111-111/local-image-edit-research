@@ -12,7 +12,7 @@ record_counts:
   pilot_RUN_001: 700
   benchmark_cases: 112
   extracted_evidence_entries: 15
-  model_registry_records: 15
+  model_registry_records: 0
 
 claim_conflicts:
 - none
