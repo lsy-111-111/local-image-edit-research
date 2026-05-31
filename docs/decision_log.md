@@ -49,3 +49,11 @@ No factual model inclusion or exclusion decisions have been made by Codex.
 - Decision: Evaluation outputs are task-level only; no aggregate leaderboard is generated.
 - Constraint: Human eval batch is blind and excludes `model_id` and `model_name`; private mapping is stored separately.
 - Next human review: Fill human scores and failure tags before any quality analysis.
+
+## Step 8 Claim Manifest Report Gate Engineering Note
+
+- Date: 2026-05-31
+- Actor: Codex as Research DevOps Agent
+- Decision: Final report rendering now requires `reports/claim_manifest.csv`.
+- Constraint: Only `allowed_in_report=yes` claims are rendered; mock-only claims cannot become model capability conclusions.
+- Next human review: Approve or reject manifest claims before any public research report.

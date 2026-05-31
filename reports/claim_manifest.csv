@@ -1,0 +1,6 @@
+claim_id,claim_text,claim_type,strength,source_type,source_path,source_url,evidence_quote,evidence_level,run_metadata_ref,eval_metadata_ref,allowed_in_report,reviewer,review_status
+c001,"The Step 6 pilot used mock adapter outputs only and does not support any model capability conclusion.",engineering_scope,moderate,run_metadata,,,,"",data/runs/pilot_RUN_001.jsonl,,yes,Codex,engineering_review
+c002,"Pilot metadata includes 700 records across 7 draft model entries.",metadata_summary,moderate,run_metadata,,,,"",data/runs/pilot_RUN_001.jsonl,,yes,Codex,engineering_review
+c003,"Pilot gate decision is go for the implemented engineering metadata gate.",gate_summary,moderate,report,reports/pilot_RUN_001_gate.md,,,"",,,yes,Codex,engineering_review
+c004,"No aggregate leaderboard is generated from the mock pilot.",eval_scope,moderate,eval_metadata,,,,"",,data/eval/pilot_metrics.csv,yes,Codex,engineering_review
+c005,"Human evaluation rows are blind and model mapping is stored separately.",eval_scope,moderate,eval_metadata,,,,"",,data/eval/human_eval_batch_001.csv,yes,Codex,engineering_review

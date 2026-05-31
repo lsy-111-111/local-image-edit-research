@@ -1,1 +1,6 @@
 line_no,claim,status,evidence_ref,notes
+7,The Step 6 pilot used mock adapter outputs only and does not support any model capability conclusion.,pass,run_metadata_ref,explicit_claim
+8,Pilot metadata includes 700 records across 7 draft model entries.,pass,run_metadata_ref,explicit_claim
+9,Pilot gate decision is go for the implemented engineering metadata gate.,pass,source_path,explicit_claim
+10,No aggregate leaderboard is generated from the mock pilot.,pass,eval_metadata_ref,explicit_claim
+11,Human evaluation rows are blind and model mapping is stored separately.,pass,eval_metadata_ref,explicit_claim

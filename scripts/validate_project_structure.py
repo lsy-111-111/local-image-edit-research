@@ -90,6 +90,7 @@ REQUIRED_FILES = [
     "scripts/core_gate_decision.py",
     "scripts/block_core_without_pilot.py",
     "scripts/render_report.py",
+    "reports/claim_manifest.csv",
     "outputs/.gitkeep",
     "data/benchmark/source_images/.gitkeep",
     "data/benchmark/masks/.gitkeep",

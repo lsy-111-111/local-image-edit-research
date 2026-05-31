@@ -7,6 +7,15 @@ from pathlib import Path
 from scripts.common import ensure_parent, read_csv_rows, read_jsonl
 
 
+def allowed_claims(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        raise SystemExit(f"missing claim manifest: {path}")
+    rows = [row for row in read_csv_rows(path) if row.get("allowed_in_report", "").strip().lower() == "yes"]
+    if not rows:
+        raise SystemExit("claim manifest has no allowed_in_report=yes rows")
+    return rows
+
+
 def summarize_runs(path: Path) -> list[str]:
     records = read_jsonl(path)
     if not records:
@@ -25,24 +34,39 @@ def summarize_runs(path: Path) -> list[str]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--claim-manifest", required=True)
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
+    claims = allowed_claims(Path(args.claim_manifest))
     company_rows = read_csv_rows(Path("data/registry/company_product_api.csv"))
     lines = [
         "# Final Report Draft",
         "",
         "This draft is generated from repository data only. It releases no strong model capability conclusions without human approval.",
         "",
-        "## Evidence Status",
+        "## Approved Claims",
         "",
-        "- Strong claims released: 0",
+    ]
+    for row in claims:
+        lines.append(f"CLAIM: {row.get('claim_text', '')}")
+    lines.extend(
+        [
+            "",
+            "## Evidence Status",
+            "",
+        ]
+    )
+    lines.extend(
+        [
+        "- Strong model capability claims released: 0",
         "- Missing-evidence strong claims: 0",
         "- Company/API rows present: " + str(len(company_rows)),
         "",
         "## Pilot Metadata Summary",
         "",
-    ]
+        ]
+    )
     lines.extend(summarize_runs(Path("data/runs/pilot_RUN_001.jsonl")))
     lines.extend(["", "## Core Smoke Metadata Summary", ""])
     lines.extend(summarize_runs(Path("data/runs/core_SMOKE_001.jsonl")))
