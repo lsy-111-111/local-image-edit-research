@@ -1,1 +1,10 @@
 query_id,query,source_type,priority,notes
+q001,OpenAI GPT Image official image editing docs,official_docs,high,Step 2 evidence pilot source
+q002,Black Forest Labs FLUX.1 Kontext official model card,official_model_card,high,Step 2 evidence pilot source
+q003,Black Forest Labs FLUX.1 Fill official model card,official_model_card,high,Step 2 evidence pilot source
+q004,Stability AI Stable Diffusion official inpainting model card,official_model_card,high,Step 2 evidence pilot source
+q005,Qwen Image Edit official model card,official_model_card,high,Step 2 evidence pilot source
+q006,ByteDance SeedEdit official paper page,paper,high,Step 2 evidence pilot source
+q007,Google Imagen and Gemini image editing official docs,official_api_docs,medium,Step 2 product/API separation source
+q008,Adobe Firefly image editing API official docs,official_api_docs,medium,Step 2 product/API separation source
+q009,Runway Gen-4 Image API official docs,official_api_docs,medium,Step 2 product/API separation source
