@@ -4,7 +4,7 @@ import argparse
 from pathlib import Path
 
 from scripts.adapters.base import ImageEditRequest
-from scripts.adapters.mock_adapter import MockImageEditAdapter
+from scripts.adapters.registry import available_adapters, create_adapter
 from scripts.common import read_csv_rows, read_jsonl, sha256_file, write_jsonl
 
 
@@ -75,6 +75,7 @@ def main() -> None:
     parser.add_argument("--models", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--metadata", required=True)
+    parser.add_argument("--adapter", choices=available_adapters(), default="mock")
     parser.add_argument("--pilot-gate")
     parser.add_argument("--core-smoke-gate")
     parser.add_argument("--dry-run", action="store_true")
@@ -94,7 +95,7 @@ def main() -> None:
     done = {(str(row.get("model_id", "")), str(row.get("case_id", ""))) for row in existing}
     new_records: list[dict[str, object]] = []
     total_cost = sum(float(row.get("cost_usd", 0.0) or 0.0) for row in existing)
-    adapter = MockImageEditAdapter()
+    adapter = create_adapter(args.adapter)
 
     for model in models:
         model_id = safe_id(model.get("model_id", ""), "model")

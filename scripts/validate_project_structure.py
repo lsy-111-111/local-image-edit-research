@@ -69,6 +69,7 @@ REQUIRED_FILES = [
     "scripts/validate_benchmark_cases.py",
     "scripts/adapters/base.py",
     "scripts/adapters/mock_adapter.py",
+    "scripts/adapters/registry.py",
     "scripts/run_generation.py",
     "scripts/audit_run_metadata.py",
     "scripts/select_pilot_models.py",
