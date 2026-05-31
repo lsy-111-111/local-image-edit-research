@@ -20,7 +20,7 @@ COUNT_RE = re.compile(r"\b(\d+)\s+(?:records?|metadata records?)\b", re.IGNORECA
 GATE_GO_RE = re.compile(r"\b(?:pilot\s+)?gate(?:\s+decision)?\s+is\s+go\b|gate_decision:\s*go", re.IGNORECASE)
 MOCK_UNSUPPORTED_CLAIM_RE = re.compile(
     r"\b(real\s+(?:model|pilot|result)|core[- ]?ready|recommend(?:s|ed)?\s+(?:model|provider)|best\s+model|"
-    r"(?:rank|ranking|leaderboard)\s+(?:is|shows|selects)|outperform(?:s|ed)?)\b",
+    r"(?:rank|ranking|leaderboard)\s+(?:is|shows|selects|ranks)|outperform(?:s|ed)?)\b",
     re.IGNORECASE,
 )
 
