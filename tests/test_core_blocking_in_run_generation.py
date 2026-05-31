@@ -42,6 +42,26 @@ def test_core_smoke_rejects_no_go_pilot_gate(tmp_path: Path) -> None:
     assert "requires pilot-gate with gate_decision: go" in result.stderr
 
 
+def test_core_smoke_requires_real_pilot_metadata(tmp_path: Path) -> None:
+    pilot_gate = tmp_path / "pilot_gate.md"
+    metadata = tmp_path / "pilot.jsonl"
+    pilot_gate.write_text("gate_decision: go\n", encoding="utf-8")
+    metadata.write_text('{"adapter":"mock","model_id":"m","case_id":"c"}\n', encoding="utf-8")
+
+    result = run_generation(
+        tmp_path,
+        "--phase",
+        "core_smoke",
+        "--pilot-gate",
+        str(pilot_gate),
+        "--pilot-metadata",
+        str(metadata),
+    )
+
+    assert result.returncode != 0
+    assert "requires pilot-metadata with real adapter metadata" in result.stderr
+
+
 def test_core_full_requires_go_core_smoke_gate(tmp_path: Path) -> None:
     pilot_gate = tmp_path / "pilot_gate.md"
     core_gate = tmp_path / "core_gate.md"

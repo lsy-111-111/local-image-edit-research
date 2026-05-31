@@ -6,10 +6,18 @@ from pathlib import Path
 from scripts.common import read_jsonl
 
 
-def pilot_gate_go(path: Path) -> bool:
+def gate_decision(path: Path) -> str:
     if not path.exists():
-        return False
-    return "gate_decision: go" in path.read_text(encoding="utf-8")
+        return "missing"
+    for line in path.read_text(encoding="utf-8").splitlines():
+        text = line.strip()
+        if text.lower().startswith("gate_decision:"):
+            return text.split(":", 1)[1].strip().lower()
+    return "missing"
+
+
+def pilot_gate_go(path: Path) -> bool:
+    return gate_decision(path) == "go"
 
 
 def metadata_has_real_adapter(path: Path) -> bool:

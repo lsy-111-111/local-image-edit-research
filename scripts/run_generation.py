@@ -43,13 +43,33 @@ def require_gate(path_value: str | None, gate_name: str, phase: str) -> None:
         raise SystemExit(f"phase={phase} requires {gate_name} with gate_decision: go; found {decision}")
 
 
-def enforce_phase_gates(phase: str, pilot_gate: str | None, core_smoke_gate: str | None) -> None:
+def require_real_metadata(path_value: str | None, metadata_name: str, phase: str) -> None:
+    if not path_value:
+        raise SystemExit(f"--{metadata_name} is required for phase={phase}")
+    records = read_jsonl(Path(path_value))
+    adapters = {str(row.get("adapter_name") or row.get("adapter") or "").strip() for row in records}
+    adapters.discard("")
+    if not records or not adapters or "mock" in adapters:
+        raise SystemExit(f"phase={phase} requires {metadata_name} with real adapter metadata")
+
+
+def enforce_phase_gates(
+    phase: str,
+    pilot_gate: str | None,
+    core_smoke_gate: str | None,
+    pilot_metadata: str | None,
+    core_smoke_metadata: str | None,
+) -> None:
     if phase not in PHASES:
         raise SystemExit(f"invalid phase: {phase}")
     if phase in {"core_smoke", "core_full"}:
         require_gate(pilot_gate, "pilot-gate", phase)
     if phase == "core_full":
         require_gate(core_smoke_gate, "core-smoke-gate", phase)
+    if phase in {"core_smoke", "core_full"}:
+        require_real_metadata(pilot_metadata, "pilot-metadata", phase)
+    if phase == "core_full":
+        require_real_metadata(core_smoke_metadata, "core-smoke-metadata", phase)
 
 
 def read_existing_metadata(path: Path) -> list[dict[str, object]]:
@@ -86,13 +106,15 @@ def main() -> None:
     parser.add_argument("--adapter", choices=sorted(available_adapters() + ["auto"]), default="mock")
     parser.add_argument("--pilot-gate")
     parser.add_argument("--core-smoke-gate")
+    parser.add_argument("--pilot-metadata")
+    parser.add_argument("--core-smoke-metadata")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--max-retries", type=int, default=0)
     parser.add_argument("--cost-limit-usd", type=float, default=None)
     args = parser.parse_args()
 
-    enforce_phase_gates(args.phase, args.pilot_gate, args.core_smoke_gate)
+    enforce_phase_gates(args.phase, args.pilot_gate, args.core_smoke_gate, args.pilot_metadata, args.core_smoke_metadata)
 
     cases = read_csv_rows(Path(args.cases))
     models = read_csv_rows(Path(args.models))

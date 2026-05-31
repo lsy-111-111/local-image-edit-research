@@ -11,7 +11,7 @@ from scripts.common import ensure_parent, is_missing, read_csv_rows
 AUDIT_FIELDS = ["line_no", "claim", "status", "evidence_ref", "notes"]
 STRONG_CLAIM_RE = re.compile(
     r"\b(best|better|support|supports|outperform|outperforms|recommend|recommends|conclusion|rank|ranking|leaderboard)\b"
-    r"|最好|优于|推荐|排名|结论",
+    "|\u6700\u597d|\u4f18\u4e8e|\u63a8\u8350|\u6392\u540d|\u7ed3\u8bba|\u699c\u5355|\u652f\u6301|\u80dc\u8fc7",
     re.IGNORECASE,
 )
 WEAK_EVIDENCE_LEVELS = {"E4", "E5"}
@@ -75,7 +75,7 @@ def report_claims(report_path: Path) -> list[dict[str, str]]:
                     "line_no": str(line_no),
                     "claim": text,
                     "raw_text": text,
-                    "source": f"strong_term:{match.group(1).lower()}",
+                    "source": f"strong_term:{match.group(0).lower()}",
                 }
             )
     return claims

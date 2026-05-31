@@ -32,6 +32,17 @@ def test_strong_claim_without_manifest_is_blocked(tmp_path: Path) -> None:
     assert "claim_manifest_required" in missing
 
 
+def test_chinese_strong_claim_without_manifest_is_blocked(tmp_path: Path) -> None:
+    report = tmp_path / "report.md"
+    report.write_text("\u8fd9\u4e2a\u62a5\u544a\u63a8\u8350\u6a21\u578b A\uff0c\u5e76\u7ed9\u51fa\u699c\u5355\u7ed3\u8bba\u3002\n", encoding="utf-8")
+
+    result = audit_claims(tmp_path, report)
+
+    assert result.returncode != 0
+    missing = (tmp_path / "missing.csv").read_text(encoding="utf-8")
+    assert "claim_manifest_required" in missing
+
+
 def test_manifest_allowed_claim_passes(tmp_path: Path) -> None:
     claim = "This report recommends Model A as the best option."
     report = tmp_path / "report.md"
