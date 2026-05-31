@@ -7,6 +7,7 @@ from scripts.common import A_LABELS, evidence_missing, read_jsonl, write_csv_row
 
 
 FIELDNAMES = [
+    "entry_id",
     "candidate_id",
     "candidate_name",
     "candidate_label",
@@ -15,9 +16,20 @@ FIELDNAMES = [
     "source_type",
     "source_url",
     "evidence_quote",
+    "evidence_quote_context",
     "evidence_level",
     "last_verified_date",
+    "review_status",
     "notes",
+]
+HUMAN_REVIEW_FIELDNAMES = [
+    "entry_id",
+    "reviewer",
+    "review_status",
+    "decision",
+    "decision_reason",
+    "reviewed_at",
+    "allowed_for_registry",
 ]
 
 
@@ -34,17 +46,40 @@ def review_reason(record: dict[str, object]) -> str:
     return ";".join(reasons)
 
 
+def entry_id(record: dict[str, object], index: int) -> str:
+    return str(record.get("entry_id") or record.get("candidate_id") or f"entry_{index:04d}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--review-queue")
+    parser.add_argument("--human-review")
     args = parser.parse_args()
     rows = []
-    for record in read_jsonl(Path(args.input)):
+    human_review_rows = []
+    for index, record in enumerate(read_jsonl(Path(args.input)), start=1):
         reason = review_reason(record)
         if reason:
-            rows.append({**record, "review_reason": reason})
+            current_entry_id = entry_id(record, index)
+            rows.append({**record, "entry_id": current_entry_id, "review_reason": reason})
+            human_review_rows.append(
+                {
+                    "entry_id": current_entry_id,
+                    "reviewer": "",
+                    "review_status": "needs_review",
+                    "decision": "pending",
+                    "decision_reason": "",
+                    "reviewed_at": "",
+                    "allowed_for_registry": "no",
+                }
+            )
     write_csv_rows(Path(args.output), rows, FIELDNAMES)
+    if args.review_queue:
+        write_csv_rows(Path(args.review_queue), rows, FIELDNAMES)
+    if args.human_review:
+        write_csv_rows(Path(args.human_review), human_review_rows, HUMAN_REVIEW_FIELDNAMES)
     print(f"exported {len(rows)} needs-review records")
 
 

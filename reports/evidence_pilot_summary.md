@@ -1,27 +1,25 @@
 # Evidence Pilot Summary
 
-Step 02 processed 26 official or first-party source records and produced 15 extracted evidence entries.
+Step 02 validates the evidence review queue only. It does not release model capability conclusions.
 
-## Gate Results
+## Counts
 
-- Raw pages include `source_url`, `retrieved_at`, `title`, and short `text` excerpts.
-- A0/A1/A2 entries include `source_url`, `evidence_quote`, `evidence_level`, and `last_verified_date`.
-- No E4/E5 record is used for a strong claim.
-- Product/API/demo records are marked as `product_feature` or `API_wrapper` and require registry review.
-- Replicate provider docs are recorded only as provider API evidence; they do not establish individual model capability or hosted model availability.
-- All entries are marked `needs_review` because Codex is not the factual judge.
+- source_count: 26
+- extracted_entry_count: 15
+- needs_review_count: 15
+- human_approved_count: 0
+- allowed_for_registry_count: 0
 
-## Human Review Queue
+## Review State
 
-Human review must confirm:
-
-- Whether each candidate is a family, version, implementation, product feature, or API wrapper.
-- Whether source excerpts support the candidate label.
-- Whether any API/product entry maps to an underlying model family.
-- Whether Stable Diffusion XL edit capability is implementation-dependent rather than family-level.
+- Raw pages use the restricted source type allowlist: `official_docs`, `official_model_card`, `official_api_docs`, `paper`, `official_github`, `release_note`.
+- Raw pages include `source_url`, `retrieved_at`, `source_type`, `title`, `content_sha256`, and either `text` or `saved_path`.
+- A0/A1/A2 entries include `source_url`, `evidence_quote`, `evidence_quote_context`, `evidence_level`, and `last_verified_date`.
+- Every extracted entry remains `review_status=needs_review`; Codex has not approved any factual model judgment.
+- `data/evidence/evidence_human_review.csv` is a human review template and defaults to `allowed_for_registry=no`.
 
 ## Decision
 
-Evidence Gate status: `go_for_registry_draft_after_human_review`.
+evidence_pilot_decision: needs_human_review
 
-This is not a model ranking and contains no model capability conclusion beyond source-backed candidate evidence.
+This evidence set may feed human review. It must not feed registry promotion, pilot candidate selection, ranking, recommendation, or model capability claims until human approval is recorded.

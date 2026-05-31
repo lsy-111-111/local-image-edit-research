@@ -21,11 +21,13 @@ def test_bad_date_format_fails_for_a_label(tmp_path: Path) -> None:
             {
                 "candidate_name": "example",
                 "candidate_label": "A2",
-                "source_type": "official_documentation",
+                "source_type": "official_docs",
                 "source_url": "https://example.test",
                 "evidence_quote": "quote",
+                "evidence_quote_context": "quote with context",
                 "evidence_level": "E2",
                 "last_verified_date": "31-05-2026",
+                "review_status": "needs_review",
             }
         )
         + "\n",

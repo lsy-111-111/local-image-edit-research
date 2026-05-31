@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import subprocess
 import sys
 from pathlib import Path
@@ -35,9 +36,10 @@ def test_evidence_readiness_allows_needs_review_report(tmp_path: Path) -> None:
     registry = tmp_path / "registry.jsonl"
     output = tmp_path / "readiness.md"
     base = {
-        "source_type": "official_documentation",
+        "source_type": "official_docs",
         "source_url": "https://example.test",
         "evidence_quote": "official quote",
+        "evidence_quote_context": "official quote with surrounding context",
         "evidence_level": "E1",
         "last_verified_date": "2026-05-31",
         "review_status": "needs_review",
@@ -47,10 +49,11 @@ def test_evidence_readiness_allows_needs_review_report(tmp_path: Path) -> None:
             {
                 "page_id": "p1",
                 "source_url": "https://example.test",
-                "source_type": "official_documentation",
+                "source_type": "official_docs",
                 "retrieved_at": "2026-05-31",
                 "title": "Example",
                 "text": "body",
+                "content_sha256": hashlib.sha256(b"body").hexdigest(),
             }
         )
         + "\n",
