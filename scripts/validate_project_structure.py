@@ -82,6 +82,7 @@ REQUIRED_FILES = [
     "scripts/merge_human_eval.py",
     "scripts/audit_eval_coverage.py",
     "scripts/summarize_failure_tags.py",
+    "scripts/summarize_task_level_eval.py",
     "scripts/validate_company_product_api.py",
     "scripts/export_company_review_queue.py",
     "scripts/monthly_company_reverify.py",

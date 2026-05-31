@@ -41,3 +41,11 @@ No factual model inclusion or exclusion decisions have been made by Codex.
 - Decision: Formal pilot used 7 evidence-backed draft entries, 100 pilot cases each, and `mock` adapter only.
 - Constraint: `reports/pilot_RUN_001_gate.md` is an engineering gate result only; it does not validate model quality.
 - Next human review: Replace mock adapter with a reviewed real adapter before any model capability claim or core benchmark.
+
+## Step 7 Task-Level Evaluation Engineering Note
+
+- Date: 2026-05-31
+- Actor: Codex as Research DevOps Agent
+- Decision: Evaluation outputs are task-level only; no aggregate leaderboard is generated.
+- Constraint: Human eval batch is blind and excludes `model_id` and `model_name`; private mapping is stored separately.
+- Next human review: Fill human scores and failure tags before any quality analysis.

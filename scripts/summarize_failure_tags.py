@@ -9,11 +9,15 @@ from scripts.common import ensure_parent, read_csv_rows
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--human", required=True)
+    parser.add_argument("--human")
+    parser.add_argument("--input")
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
+    human_path = args.human or args.input
+    if not human_path:
+        raise SystemExit("--human or --input is required")
     counter: Counter[str] = Counter()
-    for row in read_csv_rows(Path(args.human)):
+    for row in read_csv_rows(Path(human_path)):
         for tag in str(row.get("failure_tags", "")).split(";"):
             tag = tag.strip()
             if tag:

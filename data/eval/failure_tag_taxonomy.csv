@@ -1,0 +1,8 @@
+failure_tag,definition,applies_to_task_ids,severity,example_case_id,review_notes
+model_failure,Generated output fails the requested local edit,T01-T16,high,,Requires real model output before use
+adapter_failure,Adapter call, file writing, raw response, or status handling failed,T01-T16,high,,Applicable to mock and real adapters
+prompt_failure,Prompt is ambiguous, contradictory, or underspecified,T01-T16,medium,,Human reviewer should mark prompt issue
+mask_failure,Mask is missing, too rough, misplaced, or inconsistent with expected edit,T01-T16,medium,,Human reviewer should inspect source and mask
+metadata_failure,Run metadata is missing, inconsistent, or not auditable,T01-T16,high,,Blocks leaderboard and core promotion
+safety_issue,Output or requested edit creates a safety concern,T01-T16,high,,Requires human escalation
+mock_only_artifact,Output is produced by mock adapter and cannot be visually scored,T01-T16,low,,Expected for engineering-only pilot
