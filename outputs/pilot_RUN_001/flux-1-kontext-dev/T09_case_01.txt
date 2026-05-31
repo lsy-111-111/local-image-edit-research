@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T09_source.svg
+mask=data/benchmark/masks/T09_high.svg
+prompt=change the shirt color to green; case variant 1
+seed=0
+dry_run=False

@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T13_source.svg
+mask=data/benchmark/masks/T13_medium.svg
+prompt=make the book cover minimal; case variant 2
+seed=0
+dry_run=False

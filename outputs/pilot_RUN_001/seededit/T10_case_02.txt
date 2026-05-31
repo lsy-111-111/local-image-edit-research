@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T10_source.svg
+mask=data/benchmark/masks/T10_medium.svg
+prompt=add a shadow under the product; case variant 2
+seed=0
+dry_run=False

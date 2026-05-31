@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T03_source.svg
+mask=data/benchmark/masks/T03_high.svg
+prompt=change the poster text to HELLO; case variant 5
+seed=0
+dry_run=False

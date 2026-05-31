@@ -1,7 +1,5 @@
 # Pilot Gate Decision
 
-gate_decision: no_go
+gate_decision: go
 
-## Blocking Reasons
-
-- no pilot metadata records
+Pilot metadata passed the implemented engineering gate. Human factual review is still required.

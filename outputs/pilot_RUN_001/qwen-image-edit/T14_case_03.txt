@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T14_source.svg
+mask=data/benchmark/masks/T14_rough.svg
+prompt=move the badge to the upper right; case variant 3
+seed=0
+dry_run=False

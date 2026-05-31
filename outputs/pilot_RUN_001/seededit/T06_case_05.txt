@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T06_source.svg
+mask=data/benchmark/masks/T06_high.svg
+prompt=change only the cup material to ceramic; case variant 5
+seed=0
+dry_run=False

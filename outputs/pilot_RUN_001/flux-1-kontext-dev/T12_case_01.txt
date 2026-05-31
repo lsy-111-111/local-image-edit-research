@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T12_source.svg
+mask=data/benchmark/masks/T12_high.svg
+prompt=replace the sky patch with sunset colors; case variant 1
+seed=0
+dry_run=False

@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T01_source.svg
+mask=data/benchmark/masks/T01_rough.svg
+prompt=replace the red cube with a blue sphere; case variant 3
+seed=0
+dry_run=False

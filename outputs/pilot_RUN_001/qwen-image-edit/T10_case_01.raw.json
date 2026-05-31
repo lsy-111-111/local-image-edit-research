@@ -1,0 +1,6 @@
+{
+  "adapter": "mock",
+  "dry_run": false,
+  "status": "success",
+  "note": "mock adapter; no real model call performed"
+}

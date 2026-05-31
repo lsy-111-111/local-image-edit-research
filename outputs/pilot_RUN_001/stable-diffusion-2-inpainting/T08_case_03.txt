@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T08_source.svg
+mask=data/benchmark/masks/T08_rough.svg
+prompt=make the logo area blank; case variant 3
+seed=0
+dry_run=False

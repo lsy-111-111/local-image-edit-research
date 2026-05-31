@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T02_source.svg
+mask=
+prompt=remove the small sign from the table; case variant 4
+seed=0
+dry_run=False

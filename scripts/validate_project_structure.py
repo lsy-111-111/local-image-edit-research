@@ -66,6 +66,7 @@ REQUIRED_FILES = [
     "scripts/hash_assets.py",
     "scripts/create_synthetic_benchmark_pilot.py",
     "scripts/build_benchmark_cases.py",
+    "scripts/build_pilot_case_set.py",
     "scripts/validate_benchmark_cases.py",
     "scripts/adapters/base.py",
     "scripts/adapters/mock_adapter.py",

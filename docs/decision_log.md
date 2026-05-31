@@ -33,3 +33,11 @@ No factual model inclusion or exclusion decisions have been made by Codex.
 - Decision: Adapter pilot uses explicit `--adapter mock` selection through an adapter registry.
 - Constraint: Mock adapter creates metadata and files only; it produces no real model output and no model capability conclusion.
 - Next human review: Choose a real local or API adapter only after mock metadata, resume, and audit behavior remain stable.
+
+## Step 6 Formal Pilot Engineering Note
+
+- Date: 2026-05-31
+- Actor: Codex as Research DevOps Agent
+- Decision: Formal pilot used 7 evidence-backed draft entries, 100 pilot cases each, and `mock` adapter only.
+- Constraint: `reports/pilot_RUN_001_gate.md` is an engineering gate result only; it does not validate model quality.
+- Next human review: Replace mock adapter with a reviewed real adapter before any model capability claim or core benchmark.

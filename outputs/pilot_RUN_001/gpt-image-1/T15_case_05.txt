@@ -1,0 +1,6 @@
+MOCK_IMAGE_EDIT_OUTPUT
+source_image=data/benchmark/source_images/T15_source.svg
+mask=data/benchmark/masks/T15_high.svg
+prompt=restore the scratched area on the panel; case variant 5
+seed=0
+dry_run=False

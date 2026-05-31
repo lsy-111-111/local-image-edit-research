@@ -17,17 +17,25 @@ def main() -> None:
     for record in records:
         by_model[str(record.get("model_id", ""))].append(record)
 
-    lines = ["# Pilot Run Summary", "", "This summary is generated from run metadata only.", ""]
-    lines.append("| model_id | cases | failures | failure_rate | cost_usd |")
-    lines.append("|---|---:|---:|---:|---:|")
+    lines = [
+        "# Pilot Run Summary",
+        "",
+        "This summary is generated from run metadata only.",
+        "",
+        "mock_only_no_model_capability_claim: yes",
+        "",
+    ]
+    lines.append("| model_id | cases | failures | failure_rate | cost_usd | version_risk_records |")
+    lines.append("|---|---:|---:|---:|---:|---:|")
     for model_id, rows in sorted(by_model.items()):
         total = len(rows)
         failures = sum(1 for row in rows if row.get("status") != "success")
         cost = sum(float(row.get("cost_usd", 0.0) or 0.0) for row in rows)
+        version_risk = sum(1 for row in rows if row.get("version_lock") == "D_unversioned")
         rate = failures / total if total else 0.0
-        lines.append(f"| {model_id} | {total} | {failures} | {rate:.3f} | {cost:.4f} |")
+        lines.append(f"| {model_id} | {total} | {failures} | {rate:.3f} | {cost:.4f} | {version_risk} |")
     if not records:
-        lines.append("| none | 0 | 0 | 0.000 | 0.0000 |")
+        lines.append("| none | 0 | 0 | 0.000 | 0.0000 | 0 |")
     out = Path(args.output)
     ensure_parent(out)
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
