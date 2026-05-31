@@ -8,9 +8,40 @@ from scripts.adapters.mock_adapter import MockImageEditAdapter
 from scripts.common import read_csv_rows, read_jsonl, sha256_file, write_jsonl
 
 
+PHASES = {"pilot", "core_smoke", "core_full"}
+
+
 def safe_id(value: str, fallback: str) -> str:
     text = (value or fallback).strip()
     return "".join(ch if ch.isalnum() or ch in {"-", "_"} else "_" for ch in text)
+
+
+def gate_decision(path: Path) -> str:
+    if not path.exists():
+        raise SystemExit(f"gate file does not exist: {path}")
+    for line in path.read_text(encoding="utf-8").splitlines():
+        text = line.strip()
+        if text.lower().startswith("gate_decision:"):
+            return text.split(":", 1)[1].strip().lower()
+    raise SystemExit(f"gate_decision missing in gate file: {path}")
+
+
+def require_gate(path_value: str | None, gate_name: str, phase: str) -> None:
+    if not path_value:
+        raise SystemExit(f"--{gate_name} is required for phase={phase}")
+    path = Path(path_value)
+    decision = gate_decision(path)
+    if decision != "go":
+        raise SystemExit(f"phase={phase} requires {gate_name} with gate_decision: go; found {decision}")
+
+
+def enforce_phase_gates(phase: str, pilot_gate: str | None, core_smoke_gate: str | None) -> None:
+    if phase not in PHASES:
+        raise SystemExit(f"invalid phase: {phase}")
+    if phase in {"core_smoke", "core_full"}:
+        require_gate(pilot_gate, "pilot-gate", phase)
+    if phase == "core_full":
+        require_gate(core_smoke_gate, "core-smoke-gate", phase)
 
 
 def read_existing_metadata(path: Path) -> list[dict[str, object]]:
@@ -39,15 +70,20 @@ def mask_hash(case: dict[str, str]) -> str:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
+    parser.add_argument("--phase", choices=sorted(PHASES), default="pilot")
     parser.add_argument("--cases", required=True)
     parser.add_argument("--models", required=True)
     parser.add_argument("--output-dir", required=True)
     parser.add_argument("--metadata", required=True)
+    parser.add_argument("--pilot-gate")
+    parser.add_argument("--core-smoke-gate")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--max-retries", type=int, default=0)
     parser.add_argument("--cost-limit-usd", type=float, default=None)
     args = parser.parse_args()
+
+    enforce_phase_gates(args.phase, args.pilot_gate, args.core_smoke_gate)
 
     cases = read_csv_rows(Path(args.cases))
     models = read_csv_rows(Path(args.models))
@@ -81,6 +117,7 @@ def main() -> None:
                     "output_path": output_path.as_posix(),
                     "raw_response_path": raw_response_path.as_posix(),
                     "run_id": run_id,
+                    "phase": args.phase,
                     "model_id": model_id,
                     "case_id": case_id,
                 },
@@ -90,6 +127,7 @@ def main() -> None:
             new_records.append(
                 {
                     "run_id": run_id,
+                    "phase": args.phase,
                     "model_id": model_id,
                     "model_name": model.get("model_name", model_id),
                     "case_id": case_id,

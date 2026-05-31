@@ -20,10 +20,14 @@ REQUIRED_DIRS = [
     "reports",
     "docs",
     ".agents/skills/local-image-edit-research/references",
+    ".github/workflows",
 ]
 
 REQUIRED_FILES = [
     "AGENTS.md",
+    "Makefile",
+    "README.md",
+    ".github/workflows/ci.yml",
     ".agents/skills/local-image-edit-research/SKILL.md",
     "docs/project_rules.md",
     "docs/data_contract.md",
@@ -40,6 +44,7 @@ REQUIRED_FILES = [
     "data/registry/company_product_api.schema.json",
     "data/registry/experiment_run.csv",
     "data/registry/model_registry.jsonl",
+    "data/registry/uncertain_cases.csv",
     "data/registry/architecture_labels.schema.json",
     "data/registry/architecture_labels.jsonl",
     "data/benchmark/benchmark_cases.schema.json",
@@ -80,6 +85,9 @@ REQUIRED_FILES = [
     "scripts/core_gate_decision.py",
     "scripts/block_core_without_pilot.py",
     "scripts/render_report.py",
+    "outputs/.gitkeep",
+    "data/benchmark/source_images/.gitkeep",
+    "data/benchmark/masks/.gitkeep",
 ]
 
 
