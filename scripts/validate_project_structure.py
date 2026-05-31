@@ -64,6 +64,7 @@ REQUIRED_FILES = [
     "scripts/validate_architecture_labels.py",
     "scripts/export_architecture_review_queue.py",
     "scripts/hash_assets.py",
+    "scripts/create_synthetic_benchmark_pilot.py",
     "scripts/build_benchmark_cases.py",
     "scripts/validate_benchmark_cases.py",
     "scripts/adapters/base.py",

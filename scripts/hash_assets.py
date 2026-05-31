@@ -19,6 +19,8 @@ def main() -> None:
     rows = []
     if root.exists():
         for path in sorted(item for item in root.rglob("*") if item.is_file()):
+            if path.name == ".gitkeep":
+                continue
             rows.append(
                 {
                     "path": path.as_posix(),

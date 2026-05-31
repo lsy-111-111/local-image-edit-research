@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<title>T14 synthetic source</title>
+<rect width="512" height="512" fill="#f7f7f2"/>
+<rect x="72" y="88" width="152" height="152" rx="8" fill="#4d9f68"/>
+<circle cx="330" cy="180" r="64" fill="#6f6f78"/>
+<rect x="118" y="300" width="276" height="72" rx="6" fill="#39424e"/>
+<text x="96" y="456" font-size="32" fill="#20242a">T14 synthetic scene</text>
+</svg>
