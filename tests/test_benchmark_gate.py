@@ -3,6 +3,7 @@ from __future__ import annotations
 import subprocess
 import sys
 from pathlib import Path
+import hashlib
 
 
 CASE_HEADER = (
@@ -11,9 +12,11 @@ CASE_HEADER = (
 )
 
 
-def write_cases(path: Path, count: int) -> None:
+def write_cases(path: Path, count: int, image: Path) -> None:
+    image.write_bytes(b"image")
+    digest = hashlib.sha256(b"image").hexdigest()
     rows = [
-        f"c{index:03d},image.png,sha,,,T01,synthetic,512,none,en,easy,synthetic,prompt {index},prompt zh {index},change {index},preserve,safe\n"
+        f"c{index:03d},{image.as_posix()},{digest},,,T01,synthetic,512,none,en,easy,synthetic,prompt {index},prompt zh {index},change {index},preserve,safe\n"
         for index in range(count)
     ]
     path.write_text(CASE_HEADER + "".join(rows), encoding="utf-8")
@@ -22,7 +25,7 @@ def write_cases(path: Path, count: int) -> None:
 def test_benchmark_gate_marks_valid_data_ready(tmp_path: Path) -> None:
     cases = tmp_path / "cases.csv"
     output = tmp_path / "benchmark_gate.md"
-    write_cases(cases, 100)
+    write_cases(cases, 100, tmp_path / "image.png")
 
     result = subprocess.run(
         [

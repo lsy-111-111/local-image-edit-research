@@ -4,10 +4,11 @@ Step 05 generated a synthetic PNG benchmark data pilot for API-compatible adapte
 
 ## Coverage
 
-- Task coverage: T01-T16, 7 cases each.
+- Task coverage: 16 task IDs (T01-T16) in `data/benchmark/benchmark_cases.csv`.
 - Total benchmark cases: 112.
-- Pilot case subset: 100 validated cases.
-- Core smoke case subset: 100 validated cases.
+- Pilot case subset: 100 validated cases, all present in the main benchmark.
+- Core smoke case subset: 100 validated cases, all present in the main benchmark.
+- Provenance manifest rows: 112 referenced assets.
 - Mask coverage: high, medium, rough, and none.
 - Language coverage: every case includes English and Chinese prompts.
 - Copyright status: `synthetic_codex_generated` for every case.
@@ -22,9 +23,10 @@ Step 05 generated a synthetic PNG benchmark data pilot for API-compatible adapte
 - `data/benchmark/pilot_cases_100.csv`: 100 validated case rows.
 - `data/benchmark/core_cases_smoke_100.csv`: 100 validated case rows.
 - `data/benchmark/image_hashes.csv`: source image hashes.
+- `data/benchmark/provenance_manifest.csv`: source image and mask provenance, with reproducible SHA-256 hashes.
 
 ## Decision
 
-Benchmark Gate status: `go_for_real_adapter_dry_run`.
+Benchmark Gate status: `go`.
 
 This synthetic benchmark supports pipeline and metadata validation only. It does not support model capability, ranking, or production-readiness claims.
