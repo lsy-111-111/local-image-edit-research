@@ -10,18 +10,17 @@
     "record_type": {"type": "string"},
     "source_type": {
       "enum": [
-        "official_documentation",
-        "official_api_reference",
+        "official_docs",
+        "official_api_docs",
         "official_model_card",
-        "official_paper_page",
+        "official_github",
         "paper",
-        "provider_documentation",
-        "provider_model_page",
-        "unknown"
+        "release_note"
       ]
     },
     "source_url": {"type": "string"},
     "evidence_quote": {"type": "string"},
+    "evidence_quote_context": {"type": "string"},
     "evidence_level": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5", ""]},
     "last_verified_date": {"type": "string"},
     "review_status": {"type": "string"},

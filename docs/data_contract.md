@@ -8,6 +8,7 @@ Records that assert model facts must include:
 
 - `source_url`
 - `evidence_quote`
+- `evidence_quote_context`
 - `evidence_level`
 - `last_verified_date`
 
@@ -23,6 +24,17 @@ Records that assert model facts must include:
 - `E5`: weak, anecdotal, or unverifiable source.
 
 `E4` and `E5` must never support strong conclusions.
+
+## Source Types
+
+Evidence and raw pages use this restricted source type set:
+
+- `official_docs`
+- `official_model_card`
+- `official_api_docs`
+- `paper`
+- `official_github`
+- `release_note`
 
 ## Candidate Labels
 

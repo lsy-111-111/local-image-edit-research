@@ -13,14 +13,12 @@ A_LABELS = {"A0", "A1", "A2"}
 ALLOWED_CANDIDATE_LABELS = {"A0", "A1", "A2", "B", "C", "D", "X"}
 ALLOWED_EVIDENCE_LEVELS = {"E0", "E1", "E2", "E3", "E4", "E5", ""}
 ALLOWED_SOURCE_TYPES = {
-    "official_documentation",
-    "official_api_reference",
+    "official_docs",
+    "official_api_docs",
     "official_model_card",
-    "official_paper_page",
+    "official_github",
     "paper",
-    "provider_documentation",
-    "provider_model_page",
-    "unknown",
+    "release_note",
 }
 REQUIRED_EVIDENCE_FIELDS = [
     "source_type",

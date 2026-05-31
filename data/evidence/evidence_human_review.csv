@@ -1,0 +1,16 @@
+entry_id,reviewer,review_status,decision,decision_reason,reviewed_at,allowed_for_registry
+gpt-image-1,,needs_review,pending,,,no
+flux-1-kontext-dev,,needs_review,pending,,,no
+flux-1-fill-dev,,needs_review,pending,,,no
+stable-diffusion-2-inpainting,,needs_review,pending,,,no
+stable-diffusion-xl-base-1-0,,needs_review,pending,,,no
+stable-diffusion-xl-refiner-1-0,,needs_review,pending,,,no
+qwen-image-edit,,needs_review,pending,,,no
+seededit,,needs_review,pending,,,no
+google-imagen-edit-api,,needs_review,pending,,,no
+gemini-image-editing,,needs_review,pending,,,no
+adobe-firefly-fill-api,,needs_review,pending,,,no
+runway-gen4-image-api,,needs_review,pending,,,no
+flux-kontext-third-party-apis,,needs_review,pending,,,no
+replicate-predictions-api,,needs_review,pending,,,no
+replicate-official-models,,needs_review,pending,,,no
