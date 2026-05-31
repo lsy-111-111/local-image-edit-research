@@ -1,1 +1,14 @@
 case_id,source_path,record_type,issue,decision,decision_reason,requires_human_review
+gpt-image-1,data/evidence/extracted_entries.jsonl,model_version,classification_or_evidence_needs_review,registry_draft,source-backed candidate; human review required before factual use,yes
+flux-1-kontext-dev,data/evidence/extracted_entries.jsonl,model_version,classification_or_evidence_needs_review,registry_draft,source-backed candidate; human review required before factual use,yes
+flux-1-fill-dev,data/evidence/extracted_entries.jsonl,model_version,classification_or_evidence_needs_review,registry_draft,source-backed candidate; human review required before factual use,yes
+stable-diffusion-2-inpainting,data/evidence/extracted_entries.jsonl,model_version,classification_or_evidence_needs_review,registry_draft,source-backed candidate; human review required before factual use,yes
+stable-diffusion-xl-base-1-0,data/evidence/extracted_entries.jsonl,model_version,classification_or_evidence_needs_review,registry_draft,source-backed candidate; human review required before factual use,yes
+stable-diffusion-xl-refiner-1-0,data/evidence/extracted_entries.jsonl,model_version,classification_or_evidence_needs_review,not_promoted,candidate label is not A0/A1/A2,yes
+qwen-image-edit,data/evidence/extracted_entries.jsonl,model_version,classification_or_evidence_needs_review,registry_draft,source-backed candidate; human review required before factual use,yes
+seededit,data/evidence/extracted_entries.jsonl,model_family,classification_or_evidence_needs_review,registry_draft,source-backed candidate; human review required before factual use,yes
+google-imagen-edit-api,data/evidence/extracted_entries.jsonl,product_feature,classification_or_evidence_needs_review,not_model_family,product_feature must not be counted as an independent model family,yes
+gemini-image-editing,data/evidence/extracted_entries.jsonl,API_wrapper,classification_or_evidence_needs_review,not_model_family,API_wrapper must not be counted as an independent model family,yes
+adobe-firefly-fill-api,data/evidence/extracted_entries.jsonl,product_feature,classification_or_evidence_needs_review,not_model_family,product_feature must not be counted as an independent model family,yes
+runway-gen4-image-api,data/evidence/extracted_entries.jsonl,API_wrapper,classification_or_evidence_needs_review,not_model_family,API_wrapper must not be counted as an independent model family,yes
+flux-kontext-third-party-apis,data/evidence/extracted_entries.jsonl,API_wrapper,classification_or_evidence_needs_review,not_model_family,API_wrapper must not be counted as an independent model family,yes

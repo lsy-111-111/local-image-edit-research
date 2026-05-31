@@ -60,6 +60,7 @@ REQUIRED_FILES = [
     "scripts/export_needs_review.py",
     "scripts/dedupe_candidates.py",
     "scripts/build_family_tree.py",
+    "scripts/build_registry_from_evidence.py",
     "scripts/validate_architecture_labels.py",
     "scripts/export_architecture_review_queue.py",
     "scripts/hash_assets.py",

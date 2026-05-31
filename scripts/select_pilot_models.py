@@ -6,6 +6,7 @@ from pathlib import Path
 from scripts.common import read_jsonl, write_csv_rows
 
 
+ALLOWED_LABELS = {"A0", "A1", "A2"}
 FIELDNAMES = [
     "model_id",
     "model_name",
@@ -33,7 +34,10 @@ def main() -> None:
     seen_families = set()
     for record in records:
         record_type = str(record.get("record_type", "")).lower()
+        candidate_label = str(record.get("candidate_label", "")).strip()
         family_id = str(record.get("family_id", "")).strip()
+        if candidate_label and candidate_label not in ALLOWED_LABELS:
+            continue
         if record_type in {"wrapper", "api_wrapper", "product", "product_feature", "demo"}:
             continue
         if family_id and family_id in seen_families:
