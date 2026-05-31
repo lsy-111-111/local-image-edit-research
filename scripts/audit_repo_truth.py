@@ -18,6 +18,11 @@ from scripts.common import ensure_parent, read_csv_rows, read_jsonl
 
 COUNT_RE = re.compile(r"\b(\d+)\s+(?:records?|metadata records?)\b", re.IGNORECASE)
 GATE_GO_RE = re.compile(r"\b(?:pilot\s+)?gate(?:\s+decision)?\s+is\s+go\b|gate_decision:\s*go", re.IGNORECASE)
+MOCK_UNSUPPORTED_CLAIM_RE = re.compile(
+    r"\b(real\s+(?:model|pilot|result)|core[- ]?ready|recommend(?:s|ed)?\s+(?:model|provider)|best\s+model|"
+    r"(?:rank|ranking|leaderboard)\s+(?:is|shows|selects)|outperform(?:s|ed)?)\b",
+    re.IGNORECASE,
+)
 
 
 def gate_decision(path: Path) -> str:
@@ -69,9 +74,8 @@ def find_claim_conflicts(manifest: Path, pilot_count: int, gate: str, mock_only:
             conflicts.append({"claim_id": claim_id, "reason": f"pilot gate claim go != actual {gate}"})
         if GATE_GO_RE.search(text) and mock_only:
             conflicts.append({"claim_id": claim_id, "reason": "mock-only pilot cannot unlock real pilot/core"})
-        lowered = text.lower()
-        if mock_only and any(term in lowered for term in ["real model", "core-ready", "core ready"]):
-            conflicts.append({"claim_id": claim_id, "reason": "mock-only metadata cannot support real/core-ready claim"})
+        if mock_only and MOCK_UNSUPPORTED_CLAIM_RE.search(text):
+            conflicts.append({"claim_id": claim_id, "reason": "mock-only metadata cannot support real/result/core/ranking claim"})
     return conflicts
 
 
@@ -123,7 +127,11 @@ def main() -> None:
     parser.add_argument("--claim-manifest", required=True)
     parser.add_argument("--benchmark", required=True)
     parser.add_argument("--output", required=True)
+    parser.add_argument("--evidence", default="data/evidence/extracted_entries.jsonl")
+    parser.add_argument("--registry", default="data/registry/model_registry.jsonl")
+    parser.add_argument("--final-report")
     parser.add_argument("--root", default=".")
+    parser.add_argument("--allow-no-go", action="store_true")
     args = parser.parse_args()
 
     root = Path(args.root)
@@ -131,6 +139,8 @@ def main() -> None:
     pilot_records = read_jsonl(pilot_metadata)
     pilot_count = len(pilot_records)
     benchmark_count = valid_case_count(Path(args.benchmark))
+    evidence_count = len(read_jsonl(Path(args.evidence)))
+    registry_count = len(read_jsonl(Path(args.registry)))
     gate = gate_decision(Path(args.pilot_gate))
     adapters = {adapter_name(record) for record in pilot_records if adapter_name(record)}
     mock_only = bool(pilot_records) and adapters <= {"mock"}
@@ -155,8 +165,16 @@ def main() -> None:
         blocking.append("claim manifest contains conflicts with repository truth")
     if not Path(args.claim_manifest).exists():
         blocking.append("claim manifest missing")
+    if args.final_report and not Path(args.final_report).exists():
+        warnings.append("final report draft missing")
     if adapters == {"mock"}:
         warnings.append("adapter registry/pilot is mock-only; real adapter pilot is still required")
+    record_counts = {
+        "pilot_RUN_001": pilot_count,
+        "benchmark_cases": benchmark_count,
+        "extracted_evidence_entries": evidence_count,
+        "model_registry_records": registry_count,
+    }
 
     decision = "no_go" if blocking else "go"
     write_markdown(
@@ -164,11 +182,11 @@ def main() -> None:
         decision,
         sorted(set(blocking)),
         sorted(set(warnings)),
-        {"pilot_RUN_001": pilot_count, "benchmark_cases": benchmark_count},
+        record_counts,
         claim_conflicts,
         parse_errors,
     )
-    if blocking:
+    if blocking and not args.allow_no_go:
         raise SystemExit(f"repo truth decision: {decision}")
     print(f"repo truth decision: {decision}")
 
