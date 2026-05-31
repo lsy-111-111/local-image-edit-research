@@ -96,6 +96,26 @@ def mask_hash(case: dict[str, str]) -> str:
     return case.get("mask_sha256", "")
 
 
+def case_ids_from_sample_file(path: Path) -> set[str]:
+    if path.suffix.lower() == ".csv":
+        rows = read_csv_rows(path)
+        if rows and "case_id" in rows[0]:
+            return {row.get("case_id", "").strip() for row in rows if row.get("case_id", "").strip()}
+    return {line.strip() for line in path.read_text(encoding="utf-8").splitlines() if line.strip()}
+
+
+def select_cases(cases: list[dict[str, str]], case_limit: int | None, case_sample_file: str | None) -> list[dict[str, str]]:
+    selected = cases
+    if case_sample_file:
+        allowed_case_ids = case_ids_from_sample_file(Path(case_sample_file))
+        selected = [case for case in selected if case.get("case_id", "").strip() in allowed_case_ids]
+    if case_limit is not None:
+        if case_limit <= 0:
+            raise SystemExit("--case-limit must be positive")
+        selected = selected[:case_limit]
+    return selected
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--phase", choices=sorted(PHASES), default="pilot")
@@ -112,11 +132,13 @@ def main() -> None:
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--max-retries", type=int, default=0)
     parser.add_argument("--cost-limit-usd", type=float, default=None)
+    parser.add_argument("--case-limit", type=int, default=None)
+    parser.add_argument("--case-sample-file")
     args = parser.parse_args()
 
     enforce_phase_gates(args.phase, args.pilot_gate, args.core_smoke_gate, args.pilot_metadata, args.core_smoke_metadata)
 
-    cases = read_csv_rows(Path(args.cases))
+    cases = select_cases(read_csv_rows(Path(args.cases)), args.case_limit, args.case_sample_file)
     models = read_csv_rows(Path(args.models))
     metadata_path = Path(args.metadata)
     output_dir = Path(args.output_dir)
@@ -126,8 +148,11 @@ def main() -> None:
     new_records: list[dict[str, object]] = []
     total_cost = sum(float(row.get("cost_usd", 0.0) or 0.0) for row in existing)
     adapters = {}
+    stop_for_cost = False
 
     for model in models:
+        if stop_for_cost:
+            break
         model_id = safe_id(model.get("model_id", ""), "model")
         adapter_name = model.get("adapter", "mock") if args.adapter == "auto" else args.adapter
         if adapter_name not in adapters:
@@ -137,10 +162,13 @@ def main() -> None:
         version_lock = model.get("version_lock") or "D_unversioned"
         version_risk = model.get("version_risk") or ("version_unlocked" if version_lock == "D_unversioned" else "")
         for case in cases:
+            if stop_for_cost:
+                break
             case_id = safe_id(case.get("case_id", ""), "case")
             if args.resume and (model_id, case_id) in done:
                 continue
-            if args.cost_limit_usd is not None and total_cost > args.cost_limit_usd:
+            if args.cost_limit_usd is not None and total_cost >= args.cost_limit_usd:
+                stop_for_cost = True
                 break
             prompt = case.get("prompt_en") or case.get("prompt_zh") or ""
             output_path = output_dir / model_id / f"{case_id}{output_suffix}"

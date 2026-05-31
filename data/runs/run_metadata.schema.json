@@ -17,6 +17,7 @@
     "raw_response_path",
     "status",
     "version_lock",
+    "version_risk",
     "adapter",
     "adapter_name",
     "adapter_kind",
