@@ -22,6 +22,7 @@ REQUIRED = [
     "raw_response_path",
     "status",
     "version_lock",
+    "version_risk",
     "adapter",
     "adapter_name",
     "adapter_kind",
@@ -31,7 +32,10 @@ REQUIRED = [
 
 def validate(path: Path) -> list[str]:
     errors: list[str] = []
-    for index, record in enumerate(read_jsonl(path), start=1):
+    records = read_jsonl(path)
+    if not records:
+        errors.append(f"{path}: no metadata records")
+    for index, record in enumerate(records, start=1):
         for field in REQUIRED:
             if is_missing(record.get(field)):
                 errors.append(f"{path}:{index}: missing {field}")
