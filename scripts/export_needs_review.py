@@ -12,6 +12,7 @@ FIELDNAMES = [
     "candidate_label",
     "record_type",
     "review_reason",
+    "source_type",
     "source_url",
     "evidence_quote",
     "evidence_level",

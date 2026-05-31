@@ -12,3 +12,5 @@ gemini-image-editing,data/evidence/extracted_entries.jsonl,API_wrapper,classific
 adobe-firefly-fill-api,data/evidence/extracted_entries.jsonl,product_feature,classification_or_evidence_needs_review,not_model_family,product_feature must not be counted as an independent model family,yes
 runway-gen4-image-api,data/evidence/extracted_entries.jsonl,API_wrapper,classification_or_evidence_needs_review,not_model_family,API_wrapper must not be counted as an independent model family,yes
 flux-kontext-third-party-apis,data/evidence/extracted_entries.jsonl,API_wrapper,classification_or_evidence_needs_review,not_model_family,API_wrapper must not be counted as an independent model family,yes
+replicate-predictions-api,data/evidence/extracted_entries.jsonl,API_wrapper,classification_or_evidence_needs_review,not_model_family,API_wrapper must not be counted as an independent model family,yes
+replicate-official-models,data/evidence/extracted_entries.jsonl,API_wrapper,classification_or_evidence_needs_review,not_model_family,API_wrapper must not be counted as an independent model family,yes

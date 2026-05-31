@@ -12,7 +12,18 @@ from typing import Iterable
 A_LABELS = {"A0", "A1", "A2"}
 ALLOWED_CANDIDATE_LABELS = {"A0", "A1", "A2", "B", "C", "D", "X"}
 ALLOWED_EVIDENCE_LEVELS = {"E0", "E1", "E2", "E3", "E4", "E5", ""}
+ALLOWED_SOURCE_TYPES = {
+    "official_documentation",
+    "official_api_reference",
+    "official_model_card",
+    "official_paper_page",
+    "paper",
+    "provider_documentation",
+    "provider_model_page",
+    "unknown",
+}
 REQUIRED_EVIDENCE_FIELDS = [
+    "source_type",
     "source_url",
     "evidence_quote",
     "evidence_level",
@@ -94,6 +105,8 @@ def evidence_missing(record: dict[str, object]) -> list[str]:
         missing.append("last_verified_date_format")
     if str(record.get("evidence_level", "")).strip() not in ALLOWED_EVIDENCE_LEVELS:
         missing.append("evidence_level_allowed")
+    if str(record.get("source_type", "")).strip() not in ALLOWED_SOURCE_TYPES:
+        missing.append("source_type_allowed")
     return missing
 
 

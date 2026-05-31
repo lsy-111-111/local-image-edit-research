@@ -8,6 +8,18 @@
     "candidate_name": {"type": "string"},
     "candidate_label": {"enum": ["A0", "A1", "A2", "B", "C", "D", "X"]},
     "record_type": {"type": "string"},
+    "source_type": {
+      "enum": [
+        "official_documentation",
+        "official_api_reference",
+        "official_model_card",
+        "official_paper_page",
+        "paper",
+        "provider_documentation",
+        "provider_model_page",
+        "unknown"
+      ]
+    },
     "source_url": {"type": "string"},
     "evidence_quote": {"type": "string"},
     "evidence_level": {"enum": ["E0", "E1", "E2", "E3", "E4", "E5", ""]},

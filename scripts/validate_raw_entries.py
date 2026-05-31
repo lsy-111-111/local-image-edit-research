@@ -17,6 +17,7 @@ REQUIRED_COLUMNS = [
     "candidate_name",
     "candidate_label",
     "record_type",
+    "source_type",
     "source_url",
     "evidence_quote",
     "evidence_level",

@@ -25,6 +25,7 @@ def test_a_label_with_evidence_passes(tmp_path: Path) -> None:
             {
                 "candidate_name": "example",
                 "candidate_label": "A1",
+                "source_type": "official_documentation",
                 "source_url": "https://example.test",
                 "evidence_quote": "official statement",
                 "evidence_level": "E1",
