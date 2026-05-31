@@ -6,7 +6,6 @@ This draft is generated from repository data only. It releases no strong model c
 
 CLAIM: The Step 6 pilot used mock adapter outputs only and does not support any model capability conclusion.
 CLAIM: Pilot metadata includes 700 records across 7 draft model entries, all retained as mock scaffold metadata only.
-CLAIM: No aggregate leaderboard is generated from the mock pilot.
 CLAIM: Human evaluation rows are blind and model mapping is stored separately.
 CLAIM: Current research status is scaffold/no-go/needs_review until a real adapter pilot passes metadata and claim gates.
 

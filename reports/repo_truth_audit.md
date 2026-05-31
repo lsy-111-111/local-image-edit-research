@@ -3,7 +3,6 @@
 repo_truth_decision: no_go
 
 blocking_reasons:
-- claim manifest contains conflicts with repository truth
 - mock adapter records cannot unlock real pilot/core
 
 warnings:
@@ -16,8 +15,7 @@ record_counts:
   model_registry_records: 15
 
 claim_conflicts:
-- claim_id: c004
-  reason: mock-only metadata cannot support real/result/core/ranking claim
+- none
 
 jsonl_parse_errors:
 - none
